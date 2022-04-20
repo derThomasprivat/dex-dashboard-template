@@ -13,8 +13,9 @@ import * as Vibrant from 'node-vibrant'
 import img from './assets/banner.png'
 import React, {useEffect, useState} from 'react'
 import { CONFIG } from './config'
-const dex = 'sushiswap'
-const key =CONFIG.TEMPLATE.key
+const defaultDex = 'uniswap_v2'
+const defaultChainId = 1
+const key = CONFIG.TEMPLATE.key
 const geckoEnabled = true
 
 
@@ -30,8 +31,8 @@ function App() {
   const [vibrant, setVibrant] = useState("")
   const [light, setLight] = useState("")
   const [dark, setDark] = useState("")
-  const [chain, setChain] = useState(1)
-  const [dexVal, setDex] = useState("uniswap_v2")
+  const [chain, setChain] = useState(defaultChainId)
+  const [dexVal, setDex] = useState(defaultDex)
   const [dexOptions, setDexOptions] = useState([])
   const [chainOptions, setChainOptions] = useState([])
 
@@ -60,7 +61,7 @@ function App() {
       if(options.length > 0){
           setDex(options[0].value)
       }else{
-         setDex("uniswap_v2")
+         setDex(defaultDex)
       }
  
   },[chain])
@@ -68,7 +69,7 @@ function App() {
 
   const handleDex = async() => {
     let options = []
-    const resp = await axios.get(`https://api.covalenthq.com/v1/xy=k/supported_dexes/?quote-currency=USD&format=JSON&key=${CONFIG.TEMPLATE.key}`)
+    const resp = await axios.get(`https://api.covalenthq.com/v1/xy=k/supported_dexes/?quote-currency=USD&format=JSON`, {auth: {username: key}})
     setSupported([...resp.data.data.items])
 
     const uniqueChains = [...new Map(resp.data.data.items.map(item =>
@@ -134,7 +135,7 @@ function App() {
           )}/>
           <Route exact path="/:chain/:dex/:address" component={Assets}/>
           <Route path="/" render={(props) => (
-            <Landing supported={supported} dex={dex} dexVal={dexVal} enabled={geckoEnabled} covkey={key} chain={chain} {...props} light={light} vibrant={vibrant} dark={dark}/>
+            <Landing supported={supported} dex={defaultDex} dexVal={dexVal} enabled={geckoEnabled} covkey={key} chain={chain} {...props} light={light} vibrant={vibrant} dark={dark}/>
           )} /> 
         </Switch>
       </HashRouter>

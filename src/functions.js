@@ -121,17 +121,15 @@ export function getExchangeBal(key,chain,dex,address, setExBal){
       })
 }
 
-export function getDEXHealth(key,chain,dex){
+export const getDEXHealth = async (key,chain,dex)=> {
   //DEX health
   chain = chain.toString()
   const endpoint = `${chain}/xy=k/${dex}/health`
   const url = 'https://api.covalenthq.com/v1/'+endpoint+"/?key="+key
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-
-      localStorage.setItem('health', JSON.stringify(data))
-    })
+  const res = await fetch(url)
+  const data = await res.json()
+  localStorage.setItem('health', JSON.stringify(data))
+  return data
 }
 
 export function getCGData(id, setGecko){

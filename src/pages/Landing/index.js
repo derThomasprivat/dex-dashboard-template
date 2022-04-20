@@ -33,6 +33,7 @@ export default function CollectionView(props) {
 
   const [getGecko, setGecko] = useState(false)
   const [health, setHealth] = useState()
+  const [getHealth, setGetHealth] = useState()
   const dex = props.dex.replace('swap', '')
 
   var formatter = new Intl.NumberFormat('en-US', {
@@ -40,17 +41,19 @@ export default function CollectionView(props) {
   currency: 'USD',
   });
 
+  const getDexHealthResults = async ()=> {
+    return await getDEXHealth(props.covkey,props.chain,props.dexVal)
+  }
+
   useEffect(()=>{
-    getDEXHealth(props.covkey,props.chain,props.dexVal)
+    getDexHealthResults().then((res)=>setGetHealth(res))
     getCGData(props.dexVal, setGecko)
   },[props.dexVal])
 
-    
     if(props.enabled){
       
         if(!getGecko | !localStorage.getItem('health')){
             getCGData(dex, setGecko)
-            getDEXHealth(props.covkey,props.chain,props.dexVal)
             return(
                 <div id="loader" className="loading">
                  <div>
@@ -89,7 +92,6 @@ export default function CollectionView(props) {
             refreshIndicators(document.getElementById("sent-bar"))
             const market = getGecko.market_data
             const links = getGecko.links
-            const getHealth = JSON.parse(localStorage.getItem('health'))
             return (
                 <div className="main">
                 <div className="home-wrap">
@@ -102,15 +104,15 @@ export default function CollectionView(props) {
                         <table className="health-info">
                             <div className="sm-title">Latest Block Height</div>
                             <tr className="data-row">
-                                <div>{getHealth.data.items[0].latest_block_height.toLocaleString()}</div>
-                                <div>{getHealth.data.items[0].latest_block_signed_at.replace("T"," ").replace("Z","")}</div>
+                                <div>{getHealth?.data?.items[0]?.latest_block_height.toLocaleString()}</div>
+                                <div>{getHealth?.data?.items[0]?.latest_block_signed_at.replace("T"," ").replace("Z","")}</div>
                             </tr>
                         </table>
                         <table className="health-info">
                             <div className="sm-title">Synced Blocked Height</div>
                             <tr className="data-row">
-                                <div>{getHealth.data.items[0].synced_block_height.toLocaleString()}</div>
-                                <div>{getHealth.data.items[0].synced_block_signed_at.replace("T"," ").replace("Z","")}</div>
+                                <div>{getHealth?.data?.items[0]?.synced_block_height?.toLocaleString()}</div>
+                                <div>{getHealth?.data?.items[0]?.synced_block_signed_at?.replace("T"," ").replace("Z","")}</div>
                             </tr>
                         </table>
                     </div>
