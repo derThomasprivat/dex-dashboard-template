@@ -120,7 +120,7 @@ export default function CollectionView(props) {
                             <table className="dex-data-table">
                                 <tr className="data-row">
                                     <div><strong>Current Price</strong></div>
-                                    <div>{ market.current_price.usd ? formatter.format(market.current_price.usd).split('.')[0] : 0} USD</div>
+                                    <div>{ market.current_price.usd ? formatter.format(market.current_price.usd) : 0} USD</div>
                                 </tr>
                                 <tr className="data-row">
                                     <div><strong>Total Value Locked</strong></div>

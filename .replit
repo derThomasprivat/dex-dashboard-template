@@ -1,1 +1,1 @@
-run = "./src/index.js"
+run = "npm start"
