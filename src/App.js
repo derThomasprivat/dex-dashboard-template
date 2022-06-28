@@ -114,16 +114,22 @@ function App() {
           color={vibrant}
       />
       <div className="dropdownCont">
-        <SelectDropdown
-            options={chainOptions}
-            id={chain}
-            onChange={(e)=>{setChain(e.target.value)}}
-        />
-         <SelectDropdown
-            options={dexOptions}
-            id={dexVal}
-            onChange={(e)=>{setDex(e.target.value)}}
-        />
+        <div style={{display: "flex", placeItems: "center"}}>
+          <div style={{marginRight: "1rem"}}>Select Chain:</div>
+          <SelectDropdown
+              options={chainOptions}
+              id={chain}
+              onChange={(e)=>{setChain(e.target.value)}}
+          />
+        </div>
+        <div style={{display: "flex", placeItems: "center"}}>
+          <div style={{marginRight: "1rem"}}>Select Dex:</div>
+          <SelectDropdown
+              options={dexOptions}
+              id={dexVal}
+              onChange={(e)=>{setDex(e.target.value)}}
+          />
+        </div>
       </div>
     <Router>
       <HashRouter basename="/">

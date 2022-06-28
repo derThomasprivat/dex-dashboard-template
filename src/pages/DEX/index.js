@@ -160,9 +160,9 @@ const DEX = (props) => {
                         </div>
                         </div>
                         <div className="dex-page-wrap">
-                            <div>
+                            <div style={{display: "flex"}}>
                             <Button
-                              style={{display: `${page_num > 0 ? '' : 'none'}`, width:"100%" }}
+                              style={{display: `${page_num > 0 ? '' : 'none'}`, marginRight: "auto"}}
                               onClick={getPrev}
                               text="Previous"
                             />
@@ -172,9 +172,9 @@ const DEX = (props) => {
                                 <option value="50">50</option>
                                 <option value="100">100</option>
                             </select>
-                            <div>
+                            <div style={{display: "flex"}}>
                               <Button
-                                style={{display: `${has_more ? 'active': 'hide'}` , width:"100%" }}
+                                style={{display: `${has_more ? 'active': 'hide'}` , marginLeft: "auto"}}
                                 onClick={getNext}
                                 text="Next"
                               />
